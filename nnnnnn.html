@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyrics Display</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        #lyrics-container {
+            text-align: center;
+            font-size: 7pt; /* Font chữ kích thước 7 */
+            max-width: 750px;
+        }
+        .lyric-line {
+            display: inline-block;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="lyrics-container"></div>
+
+    <script>
+        // Lời bài hát
+        const lyrics = `Em là ai từ đâu bước đến nơi đây dịu dàng chân phương
+        Em là ai tựa như ánh nắng ban mai ngọt ngào trong sương
+        Ngắm em thật lâu
+        Con tim anh yếu mềm
+        Đắm say từ phút đó
+        Từng giây trôi yêu thêm
+        Bao ngày qua bình minh đánh thức xua tan bộn bề nơi anh
+        Bao ngày qua niềm thương nỗi nhớ bay theo bầu trời trong xanh
+        Liếc đôi hàng mi
+        Mong manh anh thẫn thờ
+        Muốn hôn nhẹ mái tóc
+        Bờ môi em anh mơ
+        Cầm tay anh dựa vai anh
+        Kề bên anh nơi này có anh
+        Gió mang câu tình ca
+        Ngàn ánh sao vụt qua nhẹ ôm lấy em
+        (Yêu em thương em con tim anh chân thành)
+        Cầm tay anh dựa vai anh
+        Kề bên anh nơi này có anh
+        Khép đôi mi thật lâu
+        Nguyện mãi bên cạnh nhau
+        Yêu say đắm như ngày đầu
+        Mùa xuân đến bình yên
+        Cho anh những giấc mơ
+        Hạ lưu giữ ngày mưa
+        Ngọt ngào nên thơ
+        Mùa thu lá vàng rơi
+        Đông sang anh nhớ em
+        Tình yêu bé nhỏ xin
+        Dành tặng riêng em`;
+
+        const colors = ["#FF5733", "#33FF57", "#5733FF", "#FF33F6", "#F6FF33", "#33F6FF", "#F3A9A9", "#A9F3A9"];
+
+        // Hàm để hiển thị từng chữ trong lời bài hát
+        function displayLyrics() {
+            const lines = lyrics.split('\n');
+            let lineIndex = 0; // Để theo dõi dòng hiện tại
+            const container = document.getElementById("lyrics-container");
+
+            // Hàm hiển thị một dòng
+            function showLine(line) {
+                let currentLine = "";
+                let charIndex = 0;
+                const lineElement = document.createElement("div");
+                lineElement.classList.add("lyric-line");
+                container.appendChild(lineElement);
+
+                // Tạo hiệu ứng cho từng chữ
+                const interval = setInterval(() => {
+                    if (charIndex < line.length) {
+                        currentLine += line[charIndex];
+                        lineElement.textContent = currentLine;
+                        lineElement.style.color = colors[Math.floor(Math.random() * colors.length)]; // Thay đổi màu chữ
+                        charIndex++;
+                    } else {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            lineIndex++;
+                            if (lineIndex < lines.length) {
+                                showLine(lines[lineIndex]);
+                            }
+                        }, 500); // Tạo độ trễ sau mỗi dòng
+                    }
+                }, 100); // Thời gian mỗi chữ xuất hiện
+            }
+
+            // Bắt đầu hiển thị dòng đầu tiên
+            showLine(lines[lineIndex]);
+        }
+
+        // Khi trang đã tải xong, bắt đầu hiển thị lyrics
+        window.onload = function() {
+            displayLyrics();
+        };
+    </script>
+</body>
+</html>
